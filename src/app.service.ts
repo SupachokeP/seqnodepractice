@@ -13,12 +13,16 @@ export class AppService {
     return sequelize;
   }
   public async GetdataPlayer() {
-    let db = await initModels(this.initmodel());
     try {
       await this.initmodel().authenticate();
       console.log('Connect db success');
     } catch (error) {
       console.log('Connect db fail', error);
     }
+    let db = await initModels(this.initmodel());
+    let res = await db.player.findAll({
+      raw: true,
+    });
+    return res;
   }
 }
